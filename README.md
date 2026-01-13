@@ -31,6 +31,8 @@ A cozy, responsive web app to discover books, track your reading journey, write 
 ## 📁 Project Structure
 
 bookworm-frontend/
+
+
 ├── app/                   # Next.js App Router
 │   ├── (auth)/            # Auth layout (login, register)
 │   ├── (user)/            # User-protected routes
