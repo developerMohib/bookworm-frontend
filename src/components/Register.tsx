@@ -14,6 +14,7 @@ type RegisterData = {
     email: string;
     password: string;
     confirmPassword: string;
+    photo?: string;
 };
 
 const Register = () => {
@@ -23,10 +24,10 @@ const Register = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [profileImage, setProfileImage] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        console.log('file', file)
         if (file) {
             setImageFile(file);
             const reader = new FileReader();
@@ -36,20 +37,31 @@ const Register = () => {
             reader.readAsDataURL(file);
         }
     };
-
     const handleRegister = async (data: RegisterData) => {
-        const registerData = { ...data, profileImage: imageFile };
-        console.log('Register data:', registerData);
+        setLoading(true);
+        const formData = new FormData();
+        // Append text fields
+        formData.append('name', data.name);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+
+        // Append file (if exists)
+        if (imageFile) {
+            formData.append('photo', imageFile);
+        }
         try {
-            const res = await axiosInstance.post('/register', registerData);
-            console.log('res', res)
+            const res = await axiosInstance.post('/register', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             if (res.data.success) {
                 Swal.fire({
                     title: res.data.message,
                     showConfirmButton: false,
                     timer: 800
                 });
-                //    reset();
+                reset();
             }
         } catch (error: unknown) {
             console.log(error)
@@ -70,6 +82,8 @@ const Register = () => {
                     timer: 800,
                 });
             }
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -212,11 +226,11 @@ const Register = () => {
                     </div>
 
                     <div className="mt-6">
-                        <button
+                        <button disabled={loading}
                             type="submit"
                             className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                         >
-                            Sign Up
+                            {loading ? "Loading..." : "Sign Up"}
                         </button>
                         <div className="mt-6 text-center">
                             <Link href="/" className="text-sm text-blue-500 hover:underline">
