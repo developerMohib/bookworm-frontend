@@ -53,7 +53,7 @@ const Login = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-4">
 
-            <div className="w-full max-w-sm overflow-hidden rounded-lg shadow-md bg-amber-200">
+            <div className="w-full max-w-sm overflow-hidden rounded-lg shadow-md">
                 <div className="px-6 py-4">
                     <div className="flex justify-center mx-auto">
                         <Image

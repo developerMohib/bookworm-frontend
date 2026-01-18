@@ -27,6 +27,7 @@ const Register = () => {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter()
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -39,7 +40,15 @@ const Register = () => {
         }
     };
     const handleRegister = async (data: RegisterData) => {
-        setLoading(true);
+        if (!data.name || !data.email || !data.password) {
+            console.warn('Missing form data:', data);
+            Swal.fire({
+                title: `Missing form data: ${data}`,
+                showConfirmButton: false,
+                timer: 1000
+            });
+            return;
+        }
         const formData = new FormData();
         // Append text fields
         formData.append('name', data.name);
@@ -48,19 +57,16 @@ const Register = () => {
 
         // Append file (if exists)
         if (imageFile) {
-            formData.append('photo', imageFile);
+            formData.append('image', imageFile);
         }
         try {
-            const res = await axiosInstance.post('/register', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            setLoading(true)
+            const res = await axiosInstance.post('/register', formData);
             if (res.data.success) {
                 Swal.fire({
                     title: res.data.message,
                     showConfirmButton: false,
-                    timer: 800
+                    timer: 1000
                 });
                 reset();
                 setProfileImage(null);
@@ -68,7 +74,6 @@ const Register = () => {
                 router.replace('/login')
             }
         } catch (error: unknown) {
-            console.log(error)
             if (axios.isAxiosError(error)) {
                 const message = error.response?.data?.message;
 
