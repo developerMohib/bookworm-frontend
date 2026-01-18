@@ -3,6 +3,7 @@ import { axiosInstance } from '@/api/axiosInstance';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoEyeOffOutline } from 'react-icons/io5';
@@ -17,6 +18,7 @@ type LoginData = {
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<LoginData>();
     const [showPassword, setShowPassword] = useState(false);
+        const router = useRouter()
 
     const handleLogin = async (data: LoginData) => {
         try {
@@ -28,6 +30,7 @@ const Login = () => {
                     timer: 800
                 });
                 reset();
+                router.replace('/')
             }
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {

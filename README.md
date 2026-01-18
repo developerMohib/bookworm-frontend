@@ -66,3 +66,8 @@ bookworm-frontend/
 - npm i
 - npm run build 
 - npm run dev
+
+# access credientials
+- tareknur019@gmail.com - 123456
+- mohibsub0@gmail.com - 123456
+- teacher@lms.com - 123456
