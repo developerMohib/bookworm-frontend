@@ -20,47 +20,40 @@ export type NavItem = {
 
 export const COMMON_NAV_ITEMS: NavItem[] = [
   {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: Icons.HomeOutline,
-    activeIcon: Icons.HomeSolid,
-    roles: ["user", "admin", "moderator"],
-  },
-  {
     name: "Profile",
     href: "/dashboard/profile",
     icon: Icons.UsersOutline,
     activeIcon: Icons.UsersSolid,
-    roles: ["user", "admin", "moderator"],
+    roles: ["user", "admin"],
   },
   {
     name: "Notifications",
     href: "/dashboard/notifications",
     icon: Icons.NotificationOutline,
-    roles: ["user", "admin", "moderator"],
-    badge: 3, // Example badge count
+    roles: ["user", "admin"],
+    badge: 3,
   },
 ];
 
 // User-specific items
 export const USER_NAV_ITEMS: NavItem[] = [
   {
-    name: "My Orders",
-    href: "/dashboard/orders",
+    name: "My Library",
+    href: "/my-library",
     icon: Icons.CartOutline,
     activeIcon: Icons.CartSolid,
     roles: ["user"],
   },
   {
     name: "Documents",
-    href: "/dashboard/documents",
+    href: "/documents",
     icon: Icons.DocumentsOutline,
     activeIcon: Icons.DocumentsSolid,
     roles: ["user"],
   },
   {
     name: "Billing",
-    href: "/dashboard/billing",
+    href: "/billing",
     icon: Icons.BillingOutline,
     roles: ["user"],
   },
@@ -84,20 +77,20 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
   },
   {
     name: "User Management",
-    href: "/user-management",
+    href: "/dashboard/user-management",
     icon: Icons.UsersOutline,
     activeIcon: Icons.UsersSolid,
     roles: ["admin"],
   },
   {
     name: "Book Management",
-    href: "/book-management",
+    href: "/dashboard/book-management",
     icon: Icons.InventoryOutline,
     roles: ["admin"],
   },
   {
     name: "Settings",
-    href: "/dashboard/admin/settings",
+    href: "/dashboard/settings",
     icon: Icons.SettingsOutline,
     activeIcon: Icons.SettingsSolid,
     roles: ["admin"],

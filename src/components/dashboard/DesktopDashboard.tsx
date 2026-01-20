@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
-import { COMMON_NAV_ITEMS, getNavItemsByRole } from '@/data/navigation';
+import { getNavItemsByRole } from '@/data/navigation';
 import { useApiData } from '@/hooks/useLoginUser';
 import Image from 'next/image';
 import { Icons } from '@/data/icon';
@@ -15,7 +15,7 @@ export default function DesktopSidebar() {
     if (isLoading) {
         return <p>Loading...</p>
     }
-
+console.log('user',user)
     const handleLogout = async () => {
         console.log('user')
         const res = await axiosInstance.post('/logout')
@@ -37,7 +37,7 @@ export default function DesktopSidebar() {
             {/* Sidebar Header */}
             <div className="p-6 border-b border-gray-700">
                 <div className="flex items-center space-x-3">
-                    <div className="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center">
+                    <div className="h-12 w-auto rounded-full bg-blue-500 flex items-center justify-center">
                         {user?.photo ? (
                             <Image width={450} height={450}
                                 src={user.photo}
@@ -55,8 +55,8 @@ export default function DesktopSidebar() {
                         <p className="text-sm text-gray-400 capitalize flex items-center">
                             {user?.role}
                             {user?.role === 'admin' && (
-                                <span className="ml-2 px-2 py-1 text-xs bg-red-500 rounded-full">
-                                    Admin
+                                <span className="ml-2 px-2 py-1 text-xs rounded-full">
+                                    {user.email}
                                 </span>
                             )}
                         </p>
@@ -101,36 +101,7 @@ export default function DesktopSidebar() {
                     })}
                 </div>
 
-                {/* Role-specific sections */}
-                {user?.role === 'admin' && (
-                    <div className="mt-8 pt-6 border-t border-gray-700">
-                        <h3 className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                            Admin Tools
-                        </h3>
-                        <div className="mt-2 space-y-1">
-                            {navItems
-                                .filter(item => item.roles.includes('admin') && !COMMON_NAV_ITEMS.includes(item))
-                                .map((item) => {
-                                    const Icon = item.icon;
-                                    const isActive = pathname === item.href;
-
-                                    return (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            className={`flex items-center space-x-3 px-3 py-2 rounded text-sm ${isActive
-                                                ? 'bg-gray-800 text-white'
-                                                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-                                                }`}
-                                        >
-                                            <Icon className="h-4 w-4" />
-                                            <span>{item.name}</span>
-                                        </Link>
-                                    );
-                                })}
-                        </div>
-                    </div>
-                )}
+                
             </nav>
 
             {/* Logout Button */}
