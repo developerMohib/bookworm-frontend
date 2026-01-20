@@ -1,9 +1,9 @@
-import Login from '@/components/pages/Login';
+import React from 'react';
 
 const page = () => {
     return (
         <div>
-            <Login />
+            <p>This is notification page page</p>
         </div>
     );
 };

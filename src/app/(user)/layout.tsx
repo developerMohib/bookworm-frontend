@@ -1,4 +1,3 @@
-
 'use client';
 
 import DesktopSidebar from "@/components/dashboard/DesktopDashboard";
@@ -25,9 +24,8 @@ export default function DashboardLayout({
     }
 
     if (!user) {
-       redirect('/login');
+        redirect('/login');
     }
-   
 
     return (
         <div className="min-h-screen bg-gray-50">

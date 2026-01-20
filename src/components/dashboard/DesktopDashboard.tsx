@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import {  usePathname, useRouter} from 'next/navigation';
 import { getNavItemsByRole } from '@/data/navigation';
 import { useApiData } from '@/hooks/useLoginUser';
 import Image from 'next/image';
@@ -10,26 +10,24 @@ import { axiosInstance } from '@/api/axiosInstance';
 import Swal from 'sweetalert2';
 
 export default function DesktopSidebar() {
+    const router = useRouter()
     const pathname = usePathname();
     const { data: user, isLoading } = useApiData('presentUser', '/present/user');
     if (isLoading) {
         return <p>Loading...</p>
     }
-console.log('user',user)
     const handleLogout = async () => {
-        console.log('user')
-        const res = await axiosInstance.post('/logout')
-        if (res.status === 200) {
-            Swal.fire({
-                timer: 1000,
-                title: res.data.message,
-                showConfirmButton: false,
-            })
-            redirect('/')
-        }
-        console.log('res', res)
-    }
-
+                const res = await axiosInstance.post('/logout')
+                console.log('res', typeof res.status)
+                if (res?.status === 200) {
+                    Swal.fire({
+                        timer: 1000,
+                        title: res.data.message,
+                        showConfirmButton: false,
+                    })
+                    router.push('/');
+                }
+            }
     const navItems = getNavItemsByRole(user?.role);
 
     return (
@@ -101,7 +99,7 @@ console.log('user',user)
                     })}
                 </div>
 
-                
+
             </nav>
 
             {/* Logout Button */}
