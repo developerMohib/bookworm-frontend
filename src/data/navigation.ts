@@ -25,14 +25,7 @@ export const COMMON_NAV_ITEMS: NavItem[] = [
     icon: Icons.UsersOutline,
     activeIcon: Icons.UsersSolid,
     roles: ["user", "admin"],
-  },
-  {
-    name: "Notifications",
-    href: "/dashboard/notifications",
-    icon: Icons.NotificationOutline,
-    roles: ["user", "admin"],
-    badge: 3,
-  },
+  }
 ];
 
 // User-specific items
@@ -89,8 +82,22 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
     roles: ["admin"],
   },
   {
-    name: "Settings",
-    href: "/dashboard/settings",
+    name: "Genre Management",
+    href: "/dashboard/genre-management",
+    icon: Icons.SettingsOutline,
+    activeIcon: Icons.SettingsSolid,
+    roles: ["admin"],
+  },
+  {
+    name: "Review Moderation",
+    href: "/dashboard/review-moderation",
+    icon: Icons.SettingsOutline,
+    activeIcon: Icons.SettingsSolid,
+    roles: ["admin"],
+  },
+  {
+    name: "Tutorial Management",
+    href: "/dashboard/tutorial-management",
     icon: Icons.SettingsOutline,
     activeIcon: Icons.SettingsSolid,
     roles: ["admin"],
