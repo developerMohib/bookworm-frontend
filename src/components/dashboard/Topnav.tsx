@@ -5,14 +5,28 @@ import Link from 'next/link';
 import { useApiData } from '@/hooks/useLoginUser';
 import { Icons } from '@/data/icon';
 import Image from 'next/image';
+import { axiosInstance } from '@/api/axiosInstance';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 export default function TopNav() {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const router = useRouter()
     const { data: user, isLoading } = useApiData('presentUser', '/present/user');
     if (isLoading) {
         return <p>Loading...</p>
     }
-
+ const handleLogout = async () => {
+        const res = await axiosInstance.post('/logout')
+        if (res?.status === 200) {
+            Swal.fire({
+                timer: 1000,
+                title: res.data.message,
+                showConfirmButton: false,
+            })
+            router.push('/login');
+        }
+    }
     return (
         <header className="lg:ml-64 bg-white border-b border-gray-200">
             <div className="px-4 sm:px-6 lg:px-8">
@@ -142,7 +156,7 @@ export default function TopNav() {
                                             </Link>
                                         )}
                                         <div className="border-t border-gray-100">
-                                            <button
+                                            <button onClick={handleLogout}
                                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                             >
                                                 Sign out

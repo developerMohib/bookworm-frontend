@@ -2,6 +2,7 @@
 import DesktopSidebar from "@/components/dashboard/DesktopDashboard";
 import MobileSidebar from "@/components/dashboard/MobileDashboard";
 import TopNav from "@/components/dashboard/Topnav";
+import Footer from "@/components/Footer";
 import { ReactNode, Suspense } from "react";
 import { TbLoader2 } from "react-icons/tb";
 
@@ -10,10 +11,8 @@ export default function DashboardLayout({
 }: {
     children: ReactNode;
 }) {
-
-
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="">
             <MobileSidebar />
             <DesktopSidebar />
 
@@ -33,6 +32,7 @@ export default function DashboardLayout({
                         </Suspense>
                     </div>
                 </main>
+                <Footer/>
             </div>
         </div>
     );

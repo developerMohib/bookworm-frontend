@@ -2,21 +2,35 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { getNavItemsByRole } from '@/data/navigation';
 import { useApiData } from '@/hooks/useLoginUser';
 import { Icons } from '@/data/icon';
 import Image from 'next/image';
+import { axiosInstance } from '@/api/axiosInstance';
+import Swal from 'sweetalert2';
 
 export default function MobileSidebar() {
     const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter()
     const pathname = usePathname();
     const { data: user, isLoading } = useApiData('presentUser', '/present/user');
     if (isLoading) {
         return <p>Loading...</p>
     }
     const navItems = getNavItemsByRole(user?.role);
-
+    const handleLogout = async () => {
+        const res = await axiosInstance.post('/logout')
+        if (res?.status === 200) {
+            Swal.fire({
+                timer: 1000,
+                title: res.data.message,
+                showConfirmButton: false,
+            })
+            router.push('/login');
+        }
+    }
+    
     return (
         <>
             {/* Mobile Menu Button */}
@@ -104,15 +118,14 @@ export default function MobileSidebar() {
                 </nav>
 
                 {/* Logout Button */}
-                <div className="absolute bottom-4 left-4 right-4">
-                    <button
-                        
-                        className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                    >
-                        <Icons.SettingsOutline className="h-5 w-5" />
-                        <span>Log out</span>
-                    </button>
-                </div>
+                <div className="p-4 border-t border-gray-700">
+                <button onClick={handleLogout}
+                    className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 bg-gray-800 hover:bg-red-600 text-white rounded-lg transition-colors"
+                >
+                    <Icons.SettingsOutline className="h-5 w-5" />
+                    <span>Log out</span>
+                </button>
+            </div>
             </aside>
         </>
     );

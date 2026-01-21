@@ -38,8 +38,8 @@ export const USER_NAV_ITEMS: NavItem[] = [
     roles: ["user"],
   },
   {
-    name: "Documents",
-    href: "/documents",
+    name: "All Books",
+    href: "/all-books",
     icon: Icons.DocumentsOutline,
     activeIcon: Icons.DocumentsSolid,
     roles: ["user"],
@@ -55,7 +55,7 @@ export const USER_NAV_ITEMS: NavItem[] = [
 // Admin-specific items
 export const ADMIN_NAV_ITEMS: NavItem[] = [
   {
-    name: "Admin Panel",
+    name: "Dashboard",
     href: "/dashboard",
     icon: Icons.AdminOutline,
     activeIcon: Icons.AdminSolid,
