@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {  usePathname, useRouter} from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import { getNavItemsByRole } from '@/data/navigation';
 import { useApiData } from '@/hooks/useLoginUser';
 import Image from 'next/image';
@@ -16,18 +16,21 @@ export default function DesktopSidebar() {
     if (isLoading) {
         return <p>Loading...</p>
     }
+    if (!user) {
+        redirect('/login');
+
+    }
     const handleLogout = async () => {
-                const res = await axiosInstance.post('/logout')
-                console.log('res', typeof res.status)
-                if (res?.status === 200) {
-                    Swal.fire({
-                        timer: 1000,
-                        title: res.data.message,
-                        showConfirmButton: false,
-                    })
-                    router.push('/');
-                }
-            }
+        const res = await axiosInstance.post('/logout')
+        if (res?.status === 200) {
+            Swal.fire({
+                timer: 1000,
+                title: res.data.message,
+                showConfirmButton: false,
+            })
+            router.push('/login');
+        }
+    }
     const navItems = getNavItemsByRole(user?.role);
 
     return (

@@ -18,7 +18,7 @@ type LoginData = {
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<LoginData>();
     const [showPassword, setShowPassword] = useState(false);
-        const router = useRouter()
+    const router = useRouter()
 
     const handleLogin = async (data: LoginData) => {
         try {
@@ -27,7 +27,7 @@ const Login = () => {
                 Swal.fire({
                     title: res.data.message,
                     showConfirmButton: false,
-                    timer: 800
+                    timer: 1000
                 });
                 reset();
                 router.replace('/')
@@ -37,7 +37,6 @@ const Login = () => {
                 const message = error.response?.data?.message;
 
                 Swal.fire({
-                    icon: "error",
                     title: message,
                     showConfirmButton: false,
                     timer: 800,
